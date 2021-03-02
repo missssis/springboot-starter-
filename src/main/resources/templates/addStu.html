@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>添加学生</title>
+    <meta http-equiv="Content-Type" content="textml;charset=UTF-8"/>
+
+</head>
+
+        <span>输入你要添加学生的姓名：</span>
+        <input id="username" type="text"/><button id="add_btn">添加</button>
+<!--        <form method="post" action="/findAllStu">-->
+
+<!--            <button type="submit"/>查询所有学生-->
+<!--        </form>-->
+</body>
+<!--<script src="jquery-3.3.1.min.js"></script>-->
+<script src="jquery-1.12.4.js"></script>
+<script src="bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#add_btn").bind("click",function () {
+            var url = "localhost:8080/adduser?username="+$("#username").val();
+            console.log(url);
+            $.ajax({
+                type:"GET",
+                url:url,
+                dataType:"text",
+            //     headers:{
+            //             "Access-Control-Allow-Origin": "*",
+            //             'Access-Control-Allow-Headers': 'Content-Type, ' +
+            //             'Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild',
+            //             "Access-Control-Allow-Methods":"PUT,POST,GET,DELETE,OPTIONS",
+            //             "X-Powered-By":' 3.2.1',
+            //             "Content-Type":"application/json;charset=utf-8"
+            // },
+                success:function (text,status) {
+
+                console.log("添加成功")
+            }
+        })
+    })})
+</script>
+</html>
