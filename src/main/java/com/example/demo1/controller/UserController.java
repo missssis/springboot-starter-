@@ -10,10 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +22,8 @@ import java.util.Optional;
 //@Api(tags={"用户接口"})
 @Controller
 public class UserController {
+
+
 
     @Autowired
     private StudentService studentService;
@@ -44,43 +44,51 @@ public class UserController {
 //    }
 //    @ApiOperation(value = "添加用户")
     @GetMapping("adduser")
-    public void addUser(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void addUser(HttpServletRequest request) throws IOException {
         String name = request.getParameter("username");
-        Student student = new Student(name,1);
+        String age = request.getParameter("age");
+        Student student = new Student(name,Integer.parseInt(age));
         studentService.addStu(student);
-//        PrintWriter pw = response.getWriter();
-//        pw.write("true");
-//        pw.flush();
-//        pw.close();
+        log.info("UserController-addUser 添加用户 ");
     }
-//    @ApiOperation(value = "查询用户")
-    @ResponseBody
-    @PostMapping("findAllStu")
-    public String findAllStu(HttpServletRequest request,HttpServletResponse response) throws IOException {
-       List<Student> students = studentService.selectAllStu();
-        for (Student student:students) {
-            System.out.println(student);
-        }
-        return students.toString();
-    }
-//    @ApiOperation(value = "修改用户")
-    @GetMapping("updateStu")
-    public String updateStu(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        String id = request.getParameter("id");
-        if(id!=null&&id!=""){
-            int userid= Integer.parseInt(id);
-            String username = request.getParameter("username");
-            studentService.update(username,userid);
-        }
 
-        return "wait";
+    @ResponseBody
+//    @ApiOperation(value = "修改用户")
+    @GetMapping("updateStu/{id}/{age}/{name}")
+    public void updateStu(@PathVariable Integer id,@PathVariable Integer age,@PathVariable String name) throws IOException {
+        studentService.update(name,age,id);
+        log.info("UserController-updateStu 修改用户 ");
     }
+
+    @ResponseBody
+    @GetMapping("delStu/{id}")
+    public void delStu(@PathVariable Integer id) throws IOException {
+        studentService.delStu(id);
+        log.info("UserController-delStu 根据id删除用户 ");
+    }
+
+    @ResponseBody
+    @GetMapping("findById/{id}")
+    public Student findById(@PathVariable Integer id) throws IOException {
+        log.info("UserController-findById 根据id搜索用户 ");
+        return studentService.selectById(id);
+
+    }
+
+    @ResponseBody
+    @GetMapping("findAll")
+    public List<Student> findAll(){
+        log.info("UserController-findAll 查询所有用户 ");
+        return studentService.selectAllStu();
+    }
+
+
 
 
 //    @ApiOperation(value = "返回")
     @GetMapping("/")
     public String toHome(HttpServletRequest request,HttpServletResponse response) throws IOException {
 
-        return "updateStu";
+        return "home";
     }
 }

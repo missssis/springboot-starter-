@@ -18,9 +18,10 @@ public class StudentDao {
         userJpa.save(student);
     }
 
-    public void updateStu(String name,int id){
+    public void updateStu(String name,Integer age,int id){
         Student student = userJpa.findById(id).get();
         student.setName(name);
+        student.setOld(age);
         userJpa.save(student);
     }
 

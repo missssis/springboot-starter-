@@ -21,8 +21,8 @@ public class StudentService {
     }
 
     @ApiOperation("修改用户")
-    public void update(String name , int id){
-        studentDao.updateStu(name,id);
+    public void update(String name ,Integer age, int id){
+        studentDao.updateStu(name,age,id);
     }
 //
     @ApiOperation("删除用户")

@@ -19,20 +19,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#add_btn").bind("click",function () {
-            var url = "localhost:8080/adduser?username="+$("#username").val();
+            var url = "adduser?username="+$("#username").val();
             console.log(url);
             $.ajax({
                 type:"GET",
                 url:url,
                 dataType:"text",
-            //     headers:{
-            //             "Access-Control-Allow-Origin": "*",
-            //             'Access-Control-Allow-Headers': 'Content-Type, ' +
-            //             'Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild',
-            //             "Access-Control-Allow-Methods":"PUT,POST,GET,DELETE,OPTIONS",
-            //             "X-Powered-By":' 3.2.1',
-            //             "Content-Type":"application/json;charset=utf-8"
-            // },
                 success:function (text,status) {
 
                 console.log("添加成功")

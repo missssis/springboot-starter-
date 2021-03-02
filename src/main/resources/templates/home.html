@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        <span>输入你要添加学生信息：</span>
+        姓名：<input type="text" id="adduser_name">
+        年龄：<input type="text" id="adduser_age">
+        <button id="add_btn">添加</button></br>
+        <span>输入你要删除学生id：</span>
+        ID:<input id="delById_input">
+        <button id="del_btn">删除</button></br>
+        <span>输入你要修改的学生的信息：</span>
+
+        姓名：<input type="text" id="update_name">
+        年龄：<input type="text" id="update_age">
+        ID:<input id="update_id">
+        <button id="update_btn">修改</button></br>
+
+        <button id="findAll_btn">查询所有</button></br>
+        <span>输入你要查询的id</span>
+        ID:<input type="text" id="findById_input">
+        <button id="findById_btn">根据id查询</button>
+</body>
+
+<!--<script src="jquery-3.3.1.min.js"></script>-->
+<script src="jquery-1.12.4.js"></script>
+<script src="bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#add_btn").bind("click",function () {
+            var url = "adduser?username="+$("#adduser_name").val()+"&age="+$("#adduser_age").val();
+            console.log(url);
+            $.ajax({
+                type:"GET",
+                url:url,
+                dataType:"text",
+                success:function (text,status) {
+                    console.log("添加成功")
+                }
+            })
+        })
+            $("#del_btn").bind("click",function () {
+                    var url = "delStu/"+$("#delById_input").val();
+                    console.log(url);
+                    $.ajax({
+                            type:"GET",
+                            url:url,
+                            dataType:"text",
+                            success:function (text,status) {
+                                    console.log("添加成功")
+                            }
+                    })
+            })
+
+            $("#findById_btn").bind("click",function () {
+                    var url = "findById/"+$("#findById_input").val();
+                    console.log(url);
+                    $.ajax({
+                            type:"GET",
+                            url:url,
+                            dataType:"json",
+                            success:function (json,status) {
+                                    console.log(json)
+                            }
+                    })
+            })
+            $("#findAll_btn").bind("click",function () {
+                    var url = "findAll";
+                    console.log(url);
+                    $.ajax({
+                            type:"GET",
+                            url:url,
+                            dataType:"json",
+                            success:function (json,status) {
+                                    console.log(json)
+                            }
+                    })
+            })
+            $("#update_btn").bind("click",function () {
+                    var url = "updateStu/"+$("#update_id").val()+"/"+$("#update_age").val()+"/"+$("#update_name").val();
+                    console.log(url);
+                    $.ajax({
+                            type:"GET",
+                            url:url,
+                            dataType:"text",
+                            success:function (text,status) {
+                                    console.log("添加成功")
+                            }
+                    })
+            })
+    })
+</script>
+</html>
